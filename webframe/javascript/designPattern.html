@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>创建型模式: 创建对象的模式，抽象了实例化的过程 | 等风来</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    <link rel="shortcut icon" href="/favicon.ico" type="iamge/x-icon">
+    <meta name="description" content="听云白等风来,观雨落待花开">
+    <meta name="keywords" content="等风来 前端 公众号 koala 前端文章">
+    
+    <link rel="preload" href="/assets/css/0.styles.6177d3ed.css" as="style"><link rel="preload" href="/assets/js/app.2be46521.js" as="script"><link rel="preload" href="/assets/js/2.8c5bb89e.js" as="script"><link rel="preload" href="/assets/js/25.08bb4561.js" as="script"><link rel="preload" href="/assets/js/3.285c3e97.js" as="script"><link rel="prefetch" href="/assets/js/10.b787130a.js"><link rel="prefetch" href="/assets/js/11.e59198a7.js"><link rel="prefetch" href="/assets/js/12.35d7a20e.js"><link rel="prefetch" href="/assets/js/13.f38eb395.js"><link rel="prefetch" href="/assets/js/14.58c95078.js"><link rel="prefetch" href="/assets/js/15.3a2779a8.js"><link rel="prefetch" href="/assets/js/16.a39c748d.js"><link rel="prefetch" href="/assets/js/17.282eeccc.js"><link rel="prefetch" href="/assets/js/18.51a039df.js"><link rel="prefetch" href="/assets/js/19.1ca58e1a.js"><link rel="prefetch" href="/assets/js/20.7c84a94a.js"><link rel="prefetch" href="/assets/js/21.e5c2f61d.js"><link rel="prefetch" href="/assets/js/22.77b58c56.js"><link rel="prefetch" href="/assets/js/23.f0224720.js"><link rel="prefetch" href="/assets/js/24.1b6e787a.js"><link rel="prefetch" href="/assets/js/26.52b8f42b.js"><link rel="prefetch" href="/assets/js/27.3ae5863f.js"><link rel="prefetch" href="/assets/js/28.df5fa55f.js"><link rel="prefetch" href="/assets/js/29.e0129531.js"><link rel="prefetch" href="/assets/js/30.3888baa2.js"><link rel="prefetch" href="/assets/js/31.63158b54.js"><link rel="prefetch" href="/assets/js/4.ed60b0e9.js"><link rel="prefetch" href="/assets/js/5.7b2fdca6.js"><link rel="prefetch" href="/assets/js/6.e1084eb0.js"><link rel="prefetch" href="/assets/js/7.d9c822b3.js"><link rel="prefetch" href="/assets/js/8.436fdb8c.js"><link rel="prefetch" href="/assets/js/9.2d37bcba.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6177d3ed.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">等风来</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">主页</a></div><div class="nav-item"><a href="/node/" class="nav-link">node</a></div><div class="nav-item"><a href="/webframe/" class="nav-link router-link-active">前端</a></div><div class="nav-item"><a href="/database/" class="nav-link">数据库</a></div> <a href="https://github.com/fanshouzhi/fanshouzhi.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">主页</a></div><div class="nav-item"><a href="/node/" class="nav-link">node</a></div><div class="nav-item"><a href="/webframe/" class="nav-link router-link-active">前端</a></div><div class="nav-item"><a href="/database/" class="nav-link">数据库</a></div> <a href="https://github.com/fanshouzhi/fanshouzhi.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav> <div class="my_introduce" style="padding-left:1rem;"><div class="introduce_component" data-v-7e42bc5a><img src="/images/small.png" alt data-v-7e42bc5a> <div class="intro_content" data-v-7e42bc5a><h3 data-v-7e42bc5a>千里马常有，而伯乐不常有</h3> <p data-v-7e42bc5a> 学习成长之路必将孤独</p></div></div></div> <ul class="sidebar-links"><li><a href="/webframe/" aria-current="page" class="sidebar-link">目录</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>css</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>javascript</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/webframe/javascript/" aria-current="page" class="sidebar-link">目录</a></li><li><a href="/webframe/javascript/designPattern.html" aria-current="page" class="active sidebar-link">[设计模式]36种设计模式</a></li><li><a href="/webframe/javascript/JavaScript_resource.html" class="sidebar-link">[学习资源]javaScript</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>vue</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h3 id="创建型模式-创建对象的模式-抽象了实例化的过程"><a href="#创建型模式-创建对象的模式-抽象了实例化的过程" class="header-anchor">#</a> 创建型模式: 创建对象的模式，抽象了实例化的过程</h3> <h4 id="单例模式"><a href="#单例模式" class="header-anchor">#</a> 单例模式</h4> <h5 id="什么是单例模式"><a href="#什么是单例模式" class="header-anchor">#</a> 什么是单例模式？</h5> <p>单例模式定义：保证一个类仅有一个实例，并提供访问此实例的全局访问点。</p> <h5 id="单例模式用途"><a href="#单例模式用途" class="header-anchor">#</a> 单例模式用途</h5> <p>如果一个类负责连接数据库的线程池、日志记录逻辑等等，此时需要单例模式来保证对象不被重复创建，以达到降低开销的目的。</p> <div class="language- extra-class"><pre class="language-text"><code>const Singleton = function() {};
+
+Singleton.getInstance = (function() {
+    // 由于es6没有静态类型,故闭包: 函数外部无法访问 instance
+    let instance = null;
+    return function() {
+        // 检查是否存在实例
+        if (!instance) {
+            instance = new Singleton();
+        }
+        return instance;
+    };
+})();
+
+let s1 = Singleton.getInstance();
+let s2 = Singleton.getInstance();
+
+console.log(s1 === s2);
+</code></pre></div><h4 id="工厂模式"><a href="#工厂模式" class="header-anchor">#</a> 工厂模式</h4> <h5 id="什么是工厂模式"><a href="#什么是工厂模式" class="header-anchor">#</a> 什么是工厂模式？</h5> <p>工厂方法模式的实质是“定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类。工厂方法让类的实例化推迟到子类中进行。”</p> <p>简单来说：就是把new对象的操作包裹一层，对外提供一个可以根据不同参数创建不同对象的函数。</p> <h5 id="工厂模式的优缺点"><a href="#工厂模式的优缺点" class="header-anchor">#</a> 工厂模式的优缺点</h5> <p>优点显而易见，可以隐藏原始类，方便之后的代码迁移。调用者只需要记住类的代名词即可。</p> <p>由于多了层封装，会造成类的数目过多，系统复杂度增加。</p> <h5 id="es6-实现"><a href="#es6-实现" class="header-anchor">#</a> ES6 实现</h5> <p>调用者通过向工厂类传递参数，来获取对应的实体。在这个过程中，具体实体类的创建过程，由工厂类全权负责。</p> <div class="language- extra-class"><pre class="language-text"><code>/**
+ * 实体类：Dog、Cat
+ */
+
+class Dog {
+    run() {
+        console.log(&quot;狗&quot;);
+    }
+}
+
+class Cat {
+    run() {
+        console.log(&quot;猫&quot;);
+    }
+}
+
+/**
+ * 工厂类：Animal
+ */
+
+class Animal {
+    constructor(name) {
+        name = name.toLocaleLowerCase();
+        switch (name) {
+            case &quot;dog&quot;:
+                return new Dog();
+            case &quot;cat&quot;:
+                return new Cat();
+            default:
+                throw TypeError(&quot;class name wrong&quot;);
+        }
+    }
+}
+
+/**
+ * 以下是测试代码
+ */
+
+const cat = new Animal(&quot;cat&quot;);
+cat.run();
+const dog = new Animal(&quot;dog&quot;);
+dog.run();
+</code></pre></div><h4 id="抽象工厂模式"><a href="#抽象工厂模式" class="header-anchor">#</a> 抽象工厂模式</h4> <p>抽象工厂模式就是：围绕一个超级工厂类，创建其他工厂类；再围绕工厂类，创建实体类。</p> <p>相较于传统的工厂模式，它多出了一个超级工厂类。</p> <h5 id="什么是抽象工厂模式"><a href="#什么是抽象工厂模式" class="header-anchor">#</a> 什么是抽象工厂模式？</h5> <p>抽象工厂模式就是：围绕一个超级工厂类，创建其他工厂类；再围绕工厂类，创建实体类。</p> <p>相较于传统的工厂模式，它多出了一个超级工厂类。</p> <p>它的优缺点与工厂模式类似，这里不再冗赘它的优缺点，下面直接谈一下实现吧。</p> <h5 id="准备实体类"><a href="#准备实体类" class="header-anchor">#</a> 准备实体类</h5> <p>按照之前的做法，这里我们实现几个实体类：Cat 和 Dog 一组、Male 和 Female 一组。</p> <div class="language- extra-class"><pre class="language-text"><code>// 实体类
+
+//按照之前的做法，这里我们实现几个实体类：Cat 和 Dog 一组、Male 和 Female 一组。
+
+class Dog {
+    run() {
+        console.log(&quot;狗&quot;);
+    }
+}
+
+class Cat {
+    run() {
+        console.log(&quot;猫&quot;);
+    }
+}
+
+/*************************************************/
+
+class Male {
+    run() {
+        console.log(&quot;男性&quot;);
+    }
+}
+
+class Female {
+    run() {
+        console.log(&quot;女性&quot;);
+    }
+}
+
+
+// 工厂类
+
+// 假设 Cat 和 Dog，属于 Animal 工厂的产品；Male 和 Female 属于 Person  工厂的产品。所以需要实现 2 个工厂类：Animal 和 Person。
+
+// 由于工厂类上面还有个超级工厂，为了方便工厂类生产实体，工厂类应该提供生产实体的方法接口。
+
+为了更好的约束工厂类的实现，先实现一个抽象工厂类：
+
+class AbstractFactory {
+    getPerson() {
+        throw new Error(&quot;子类请实现接口&quot;);
+    }
+
+    getAnimal() {
+        throw new Error(&quot;子类请实现接口&quot;);
+    }
+}
+
+</code></pre></div><h5 id="接下来-animal-和-dog-实现抽象工厂类-abstractfactory"><a href="#接下来-animal-和-dog-实现抽象工厂类-abstractfactory" class="header-anchor">#</a> 接下来，Animal 和 Dog 实现抽象工厂类(AbstractFactory)：</h5> <div class="language- extra-class"><pre class="language-text"><code>class PersonFactory extends AbstractFactory {
+    getPerson(person) {
+        person = person.toLocaleLowerCase();
+        switch (person) {
+            case &quot;male&quot;:
+                return new Male();
+            case &quot;female&quot;:
+                return new Female();
+            default:
+                break;
+        }
+    }
+
+    getAnimal() {
+        return null;
+    }
+}
+
+class AnimalFactory extends AbstractFactory {
+    getPerson() {
+        return null;
+    }
+
+    getAnimal(animal) {
+        animal = animal.toLocaleLowerCase();
+        switch (animal) {
+            case &quot;cat&quot;:
+                return new Cat();
+            case &quot;dog&quot;:
+                return new Dog();
+            default:
+                break;
+        }
+    }
+}
+</code></pre></div><h5 id="实现-超级工厂"><a href="#实现-超级工厂" class="header-anchor">#</a> 实现“超级工厂”</h5> <p>超级工厂的实现没什么困难，如下所示：</p> <div class="language- extra-class"><pre class="language-text"><code>class Factory {
+    constructor(choice) {
+        choice = choice.toLocaleLowerCase();
+        switch (choice) {
+            case &quot;person&quot;:
+                return new PersonFactory();
+            case &quot;animal&quot;:
+                return new AnimalFactory();
+            default:
+                break;
+        }
+    }
+}
+</code></pre></div><p>看看怎么使用超级工厂
+实现了那么多，还是要看用例才能更好理解“超级工厂”的用法和设计理念：</p> <div class="language- extra-class"><pre class="language-text"><code>/**
+ * 以下是测试代码
+ */
+
+// 创建person工厂
+const personFactory = new Factory(&quot;person&quot;);
+// 从person工厂中创建 male 和 female 实体
+const male = personFactory.getPerson(&quot;male&quot;),
+    female = personFactory.getPerson(&quot;female&quot;);
+// 输出测试
+male.run();
+female.run();
+
+// 创建animal工厂
+const animalFactory = new Factory(&quot;animal&quot;);
+// 从animal工厂中创建 dog 和 cat 实体
+const dog = animalFactory.getAnimal(&quot;dog&quot;),
+    cat = animalFactory.getAnimal(&quot;cat&quot;);
+// 输出测试
+dog.run();
+cat.run();
+</code></pre></div><h3 id="结构型模式"><a href="#结构型模式" class="header-anchor">#</a> 结构型模式:</h3> <p>解决怎样组装现有对象，设计交互方式，从而达到实现一定的功能目的。例如，以封装为目的的适配器和桥接，以扩展性为目的的代理、装饰器</p> <h5 id="享元模式"><a href="#享元模式" class="header-anchor">#</a> 享元模式</h5> <p>享元模式：运用共享技术来减少创建对象的数量，从而减少内存占用、提高性能。</p> <h5 id="什么是-享元模式"><a href="#什么是-享元模式" class="header-anchor">#</a> 什么是“享元模式”？</h5> <p>享元模式：运用共享技术来减少创建对象的数量，从而减少内存占用、提高性能。</p> <ul><li>享元模式提醒我们将一个对象的属性划分为内部和外部状态。
+<ol><li>内部状态：可以被对象集合共享，通常不会改变</li> <li>外部状态：根据应用场景经常改变</li></ol></li> <li>享元模式是利用时间换取空间的优化模式。</li></ul> <h5 id="应用场景"><a href="#应用场景" class="header-anchor">#</a> 应用场景</h5> <p>享元模式虽然名字听起来比较高深，但是实际使用非常容易：只要是需要大量创建重复的类的代码块，均可以使用享元模式抽离内部/外部状态，减少重复类的创建。</p> <p>为了显示它的强大，下面的代码是简单地实现了大家耳熟能详的“对象池”，以彰显这种设计模式的魅力。</p> <h5 id="代码实现"><a href="#代码实现" class="header-anchor">#</a> 代码实现</h5> <p>通过阅读下方代码可以发现：对于File类，内部状态是pool属性和download方法；外部状态是name和src(文件名和文件链接)。借助对象池，实现了File类的复用</p> <div class="language- extra-class"><pre class="language-text"><code>// 对象池
+class ObjectPool {
+    constructor() {
+        this._pool = []; //
+    }
+
+    // 创建对象
+    create(Obj) {
+        return this._pool.length === 0
+            ? new Obj(this) // 对象池中没有空闲对象，则创建一个新的对象
+            : this._pool.shift(); // 对象池中有空闲对象，直接取出，无需再次创建
+    }
+
+    // 对象回收
+    recover(obj) {
+        return this._pool.push(obj);
+    }
+
+    // 对象池大小
+    size() {
+        return this._pool.length;
+    }
+}
+
+// 模拟文件对象
+class File {
+    constructor(pool) {
+        this.pool = pool;
+    }
+
+    // 模拟下载操作
+    download() {
+        console.log(`+ 从 ${this.src} 开始下载 ${this.name}`);
+        setTimeout(() =&gt; {
+            console.log(`- ${this.name} 下载完毕`); // 下载完毕后, 将对象重新放入对象池
+            this.pool.recover(this);
+        }, 100);
+    }
+}
+
+/****************** 以下是测试函数 **********************/
+
+let objPool = new ObjectPool();
+
+let file1 = objPool.create(File);
+file1.name = &quot;文件1&quot;;
+file1.src = &quot;https://download1.com&quot;;
+file1.download();
+
+let file2 = objPool.create(File);
+file2.name = &quot;文件2&quot;;
+file2.src = &quot;https://download2.com&quot;;
+file2.download();
+
+setTimeout(() =&gt; {
+    let file3 = objPool.create(File);
+    file3.name = &quot;文件3&quot;;
+    file3.src = &quot;https://download3.com&quot;;
+    file3.download();
+}, 200);
+
+setTimeout(
+    () =&gt;
+        console.log(
+            `${&quot;*&quot;.repeat(
+                50
+            )}\n下载了3个文件，但其实只创建了${objPool.size()}个对象`
+        ),
+    1000
+);
+
+/** 下载结果
++ 从 https://download1.com 开始下载 文件1
++ 从 https://download2.com 开始下载 文件2
+- 文件1 下载完毕
+- 文件2 下载完毕
++ 从 https://download3.com 开始下载 文件3
+- 文件3 下载完毕
+**************************************************
+下载了3个文件，但其实只创建了2个对象
+**/
+</code></pre></div><h4 id="代理模式"><a href="#代理模式" class="header-anchor">#</a> 代理模式</h4> <p>代理模式的定义：为一个对象提供一种代理以方便对它的访问。</p> <h5 id="什么是代理模式"><a href="#什么是代理模式" class="header-anchor">#</a> 什么是代理模式？</h5> <p>代理模式的定义：为一个对象提供一种代理以方便对它的访问。</p> <p>代理模式可以解决避免对一些对象的直接访问，以此为基础，常见的有保护代理和虚拟代理。保护代理可以在代理中直接拒绝对对象的访问；虚拟代理可以延迟访问到真正需要的时候，以节省程序开销。</p> <h5 id="代理模式优缺点"><a href="#代理模式优缺点" class="header-anchor">#</a> 代理模式优缺点</h5> <p>代理模式有高度解耦、对象保护、易修改等优点。</p> <p>同样地，因为是通过“代理”访问对象，因此开销会更大，时间也会更慢。</p> <div class="language- extra-class"><pre class="language-text"><code>// main.js
+const myImg = {
+    setSrc(imgNode, src) {
+        imgNode.src = src;
+    }
+};
+
+// 利用代理模式实现图片懒加载
+const proxyImg = {
+    setSrc(imgNode, src) {
+        myImg.setSrc(imgNode, &quot;./image.png&quot;); // NO1. 加载占位图片并且将图片放入元素
+
+        let img = new Image();
+        img.onload = () =&gt; {
+            myImg.setSrc(imgNode, src); // NO3. 完成加载后, 更新  元素中的图片
+        };
+        img.src = src; // NO2. 加载真正需要的图片
+    }
+};
+
+let imgNode = document.createElement(&quot;img&quot;),
+    imgSrc =
+        &quot;https://upload-images.jianshu.io/upload_images/5486602-5cab95ba00b272bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp&quot;;
+
+document.body.appendChild(imgNode);
+
+proxyImg.setSrc(imgNode, imgSrc);
+
+</code></pre></div><div class="language-html extra-class"><pre class="language-html"><code><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>en<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>UTF-8<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>viewport<span class="token punctuation">&quot;</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>width=device-width, initial-scale=1.0<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>./main.js<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="桥接模式"><a href="#桥接模式" class="header-anchor">#</a> 桥接模式</h4> <p>桥接模式：将抽象部分和具体实现部分分离，两者可独立变化，也可以一起工作。</p> <h4 id="什么是桥接模式"><a href="#什么是桥接模式" class="header-anchor">#</a> 什么是桥接模式</h4> <p>桥接模式：将抽象部分和具体实现部分分离，两者可独立变化，也可以一起工作。</p> <p>在这种模式的实现上，需要一个对象担任“桥”的角色，起到连接的作用。</p> <h4 id="应用场景-2"><a href="#应用场景-2" class="header-anchor">#</a> 应用场景</h4> <p>在封装开源库的组件时候，经常会用到这种设计模式。</p> <p>例如，对外提供暴露一个afterFinish函数,
+如果用户有传入此函数, 那么就会在某一段代码逻辑中调用。</p> <p>这个过程中，组件起到了“桥”的作用，而具体实现是用户自定义。</p> <h4 id="es6-实现-2"><a href="#es6-实现-2" class="header-anchor">#</a> ES6 实现</h4> <p>JavaScript 中桥接模式的典型应用是：Array对象上的forEach函数。</p> <p>此函数负责循环遍历数组每个元素，是抽象部分；
+而回调函数callback就是具体实现部分。</p> <p>下方是模拟forEach方法：</p> <div class="language- extra-class"><pre class="language-text"><code>const forEach = (arr, callback) =&gt; {
+    if (!Array.isArray(arr)) return;
+
+    const length = arr.length;
+    for (let i = 0; i &lt; length; ++i) {
+        callback(arr[i], i);
+    }
+};
+
+// 以下是测试代码
+let arr = [&quot;a&quot;, &quot;b&quot;];
+forEach(arr, (el, index) =&gt; console.log(&quot;元素是&quot;, el, &quot;位于&quot;, index));
+</code></pre></div><h4 id="装饰者模式"><a href="#装饰者模式" class="header-anchor">#</a> 装饰者模式</h4> <p>装饰者模式：在不改变对象自身的基础上，动态地添加功能代码。</p> <h4 id="什么是-装饰者模式"><a href="#什么是-装饰者模式" class="header-anchor">#</a> 什么是“装饰者模式”？</h4> <p>装饰者模式：在不改变对象自身的基础上，动态地添加功能代码。</p> <p>根据描述，装饰者显然比继承等方式更灵活，而且不污染原来的代码，代码逻辑松耦合。</p> <h4 id="应用场景-3"><a href="#应用场景-3" class="header-anchor">#</a> 应用场景</h4> <p>装饰者模式由于松耦合，多用于一开始不确定对象的功能、或者对象功能经常变动的时候。</p> <p>尤其是在参数检查、参数拦截等场景。</p> <h4 id="代码实现-2"><a href="#代码实现-2" class="header-anchor">#</a> 代码实现</h4> <p>ES6 的装饰器语法规范只是在“提案阶段”，而且不能装饰普通函数或者箭头函数。</p> <p>下面的代码，addDecorator可以为指定函数增加装饰器。</p> <p>其中，装饰器的触发可以在函数运行之前，也可以在函数运行之后。</p> <p>注意：装饰器需要保存函数的运行结果，并且返回。</p> <div class="language- extra-class"><pre class="language-text"><code>const isFn = fn =&gt; typeof fn === &quot;function&quot;;
+
+const addDecorator = (fn, before, after) =&gt; {
+    if (!isFn(fn)) {
+        return () =&gt; {};
+    }
+
+    return (...args) =&gt; {
+        let result;
+        // 按照顺序执行“装饰函数”
+        isFn(before) &amp;&amp; before(...args);
+        // 保存返回函数结果
+        isFn(fn) &amp;&amp; (result = fn(...args));
+        isFn(after) &amp;&amp; after(...args);
+        // 最后返回结果
+        return result;
+    };
+};
+
+/******************以下是测试代码******************/
+
+const beforeHello = (...args) =&gt; {
+    console.log(`Before Hello, args are ${args}`);
+};
+
+const hello = (name = &quot;user&quot;) =&gt; {
+    console.log(`Hello, ${name}`);
+    return name;
+};
+
+const afterHello = (...args) =&gt; {
+    console.log(`After Hello, args are ${args}`);
+};
+
+const wrappedHello = addDecorator(hello, beforeHello, afterHello);
+
+let result = wrappedHello(&quot;godbmw.com&quot;);
+console.log(result);
+</code></pre></div><h4 id="组合模式"><a href="#组合模式" class="header-anchor">#</a> 组合模式</h4> <p>组合模式，将对象组合成树形结构以表示“部分-整体”的层次结构。</p> <h5 id="什么是-组合模式"><a href="#什么是-组合模式" class="header-anchor">#</a> 什么是“组合模式”？</h5> <p>组合模式，将对象组合成树形结构以表示“部分-整体”的层次结构。</p> <p>用小的子对象构造更大的父对象，而这些子对象也由更小的子对象构成</p> <p>单个对象和组合对象对于用户暴露的接口具有一致性，而同种接口不同表现形式亦体现了多态性</p> <h5 id="应用场景-4"><a href="#应用场景-4" class="header-anchor">#</a> 应用场景</h5> <p>组合模式可以在需要针对“树形结构”进行操作的应用中使用，例如扫描文件夹、渲染网站导航结构等等。</p> <h5 id="代码实现-3"><a href="#代码实现-3" class="header-anchor">#</a> 代码实现</h5> <p>这里用代码模拟文件扫描功能，封装了File和Folder两个类。在组合模式下，用户可以向Folder类嵌套File或者Folder来模拟真实的“文件目录”的树结构。</p> <p>同时，两个类都对外提供了scan接口，File下的scan是扫描文件，Folder下的scan是调用子文件夹和子文件的scan方法。整个过程采用的是深度优先。</p> <div class="language- extra-class"><pre class="language-text"><code>// 文件类
+class File {
+    constructor(name) {
+        this.name = name || &quot;File&quot;;
+    }
+
+    add() {
+        throw new Error(&quot;文件夹下面不能添加文件&quot;);
+    }
+
+    scan() {
+        console.log(&quot;扫描文件: &quot; + this.name);
+    }
+}
+
+// 文件夹类
+class Folder {
+    constructor(name) {
+        this.name = name || &quot;Folder&quot;;
+        this.files = [];
+    }
+
+    add(file) {
+        this.files.push(file);
+    }
+
+    scan() {
+        console.log(&quot;扫描文件夹: &quot; + this.name);
+        for (let file of this.files) {
+            file.scan();
+        }
+    }
+}
+
+let home = new Folder(&quot;用户根目录&quot;);
+
+let folder1 = new Folder(&quot;第一个文件夹&quot;),
+    folder2 = new Folder(&quot;第二个文件夹&quot;);
+
+let file1 = new File(&quot;1号文件&quot;),
+    file2 = new File(&quot;2号文件&quot;),
+    file3 = new File(&quot;3号文件&quot;);
+
+// 将文件添加到对应文件夹中
+folder1.add(file1);
+
+folder2.add(file2);
+folder2.add(file3);
+
+// 将文件夹添加到更高级的目录文件夹中
+home.add(folder1);
+home.add(folder2);
+
+// 扫描目录文件夹
+home.scan();
+</code></pre></div><h4 id="适配器模式"><a href="#适配器模式" class="header-anchor">#</a> 适配器模式</h4> <p>适配器模式：为多个不兼容接口之间提供“转化器”。</p> <h5 id="什么是适配器模式"><a href="#什么是适配器模式" class="header-anchor">#</a> 什么是适配器模式？</h5> <p>适配器模式：为多个不兼容接口之间提供“转化器”。</p> <p>它的实现非常简单，检查接口的数据，进行过滤、重组等操作，使另一接口可以使用数据即可。</p> <h5 id="应用场景-5"><a href="#应用场景-5" class="header-anchor">#</a> 应用场景</h5> <p>当数据不符合使用规则，就可以借助此种模式进行格式转化。</p> <h5 id="多语言实现"><a href="#多语言实现" class="header-anchor">#</a> 多语言实现</h5> <p>假设编写了不同平台的音乐爬虫，破解音乐数据。而对外向用户暴露的数据应该是具有一致性。</p> <p>下面，adapter函数的作用就是转化数据格式。</p> <p>事实上，在我开发的音乐爬虫库–music-api-next就采用了下面的处理方法。</p> <p>因为，网易、QQ、虾米等平台的音乐数据不同，需要处理成一致的数据返回给用户，方便用户调用。</p> <p>ES6 实现</p> <div class="language- extra-class"><pre class="language-text"><code>const API = {
+    qq: () =&gt; ({
+        n: &quot;菊花台&quot;,
+        a: &quot;周杰伦&quot;,
+        f: 1
+    }),
+    netease: () =&gt; ({
+        name: &quot;菊花台&quot;,
+        author: &quot;周杰伦&quot;,
+        f: false
+    })
+};
+
+const adapter = (info = {}) =&gt; ({
+    name: info.name || info.n,
+    author: info.author || info.a,
+    free: !!info.f
+});
+
+/*************测试函数***************/
+
+console.log(adapter(API.qq()));
+console.log(adapter(API.netease()));
+
+</code></pre></div><h3 id="行为型模式"><a href="#行为型模式" class="header-anchor">#</a> 行为型模式:</h3> <p>描述多个类或对象怎样交互以及怎样分配职责</p> <h4 id="命令模式"><a href="#命令模式" class="header-anchor">#</a> 命令模式</h4> <p>命令模式定义：将一个请求封装为一个对象，从而使我们可用不同的请求对客户进行参数化；对请求排队或者记录请求日志，以及支持可撤销的操作。</p> <h5 id="什么是-命令模式"><a href="#什么是-命令模式" class="header-anchor">#</a> 什么是“命令模式”？</h5> <p>命令模式（别名：动作模式、事务模式）定义：将一个请求封装为一个对象，从而使我们可用不同的请求对客户进行参数化；对请求排队或者记录请求日志，以及支持可撤销的操作。</p> <p>简单来说，它的核心思想是：不直接调用类的内部方法，而是通过给“指令函数”传递参数，由“指令函数”来调用类的内部方法。</p> <p>在这过程中，分别有 3 个不同的主体：调用者、传递者和执行者。</p> <h5 id="应用场景-6"><a href="#应用场景-6" class="header-anchor">#</a> 应用场景</h5> <p>当想降低调用者与执行者（类的内部方法）之间的耦合度时，可以使用此种设计模式。比如：设计一个命令队列，将命令调用记入日志。</p> <div class="language- extra-class"><pre class="language-text"><code>// 为了方便演示，mock的假数据
+const mockData = {
+    10001: {
+        name: &quot;电视&quot;,
+        price: 3888
+    },
+    10002: {
+        name: &quot;MacPro&quot;,
+        price: 17000
+    }
+};
+
+/**
+ * 商品类（执行者）
+ */
+class Mall {
+    static request(id) {
+        if (!mockData[id]) {
+            return `商品不存在`;
+        }
+
+        const { name, price } = mockData[id];
+        return `商品名: ${name} 单价: ${price}`;
+    }
+
+    static buy(id, number) {
+        if (!mockData[id]) {
+            return `商品不存在`;
+        }
+        if (number &lt; 1) {
+            return `至少购买1个商品`;
+        }
+
+        return mockData[id].price * number;
+    }
+}
+</code></pre></div><h4 id="备忘录模式"><a href="#备忘录模式" class="header-anchor">#</a> 备忘录模式</h4> <p>备忘录模式：属于行为模式，保存某个状态，并且在需要的时候直接获取，而不是重复计算。</p> <h5 id="什么是备忘录模式"><a href="#什么是备忘录模式" class="header-anchor">#</a> 什么是备忘录模式</h5> <p>备忘录模式：属于行为模式，保存某个状态，并且在需要的时候直接获取，而不是重复计算。</p> <p>注意：备忘录模式实现，不能破坏原始封装。也就是说，能拿到内部状态，将其保存在外部。</p> <h5 id="应用场景-7"><a href="#应用场景-7" class="header-anchor">#</a> 应用场景</h5> <p>最典型的例子是“斐波那契数列”递归实现。
+不借助备忘录模式，数据一大，就容易爆栈；借助备忘录，算法的时间复杂度可以降低到O(N)
+除此之外，数据的缓存等也是常见应用场景。</p> <h5 id="es6-实现-3"><a href="#es6-实现-3" class="header-anchor">#</a> ES6 实现</h5> <p>首先模拟了一下简单的拉取分页数据。
+如果当前数据没有被缓存，那么就模拟异步请求，并将结果放入缓存中；
+如果已经缓存过，那么立即取出即可，无需多次请求。</p> <div class="language- extra-class"><pre class="language-text"><code>const fetchData = (() =&gt; {
+    // 备忘录 / 缓存
+    const cache = {};
+
+    return page =&gt;
+        new Promise(resolve =&gt; {
+            // 如果页面数据已经被缓存, 直接取出
+            if (page in cache) {
+                return resolve(cache[page]);
+            }
+            // 否则, 异步请求页面数据
+            // 此处, 仅仅是模拟异步请求
+            setTimeout(() =&gt; {
+                cache[page] = `内容是${page}`;
+                resolve(cache[page]);
+            }, 1000);
+        });
+})();
+
+// 以下是测试代码
+const run = async () =&gt; {
+    let start = new Date().getTime(),
+        now;
+    // 第一次: 没有缓存
+    await fetchData(1);
+    now = new Date().getTime();
+    console.log(`没有缓存, 耗时${now - start}ms`);
+
+    // 第二次: 有缓存 / 备忘录有记录
+    start = now;
+    await fetchData(1);
+    now = new Date().getTime();
+    console.log(`有缓存, 耗时${now - start}ms`);
+};
+
+run();
+</code></pre></div><h4 id="模板模式"><a href="#模板模式" class="header-anchor">#</a> 模板模式</h4> <p>模板模式是：抽象父类定义了子类需要重写的相关方法。并且这些方法，仍然是通过父类方法调用的。</p> <h5 id="什么是模板模式"><a href="#什么是模板模式" class="header-anchor">#</a> 什么是模板模式？</h5> <p>模板模式是：抽象父类定义了子类需要重写的相关方法。并且这些方法，仍然是通过父类方法调用的。</p> <p>根据描述，父类提供了“模板”并决定是否调用，子类进行具体实现。</p> <h5 id="应用场景-8"><a href="#应用场景-8" class="header-anchor">#</a> 应用场景</h5> <p>一些系统的架构或者算法骨架，由“BOSS”编写抽象方法，具体的实现，交给“小弟们”实现。</p> <p>而用不用“小弟们”的方法，还是看“BOSS”的心情。</p> <h5 id="es6-实现-4"><a href="#es6-实现-4" class="header-anchor">#</a> ES6 实现</h5> <p>Animal是抽象类，Dog和Cat分别具体实现了eat()和sleep()方法。</p> <p>Dog或Cat实例可以通过live()方法调用eat()和sleep()。</p> <p>注意：Cat和Dog实例会被自动添加live()方法。不暴露live()是为了防止live()被子类重写，保证父类的控制权。</p> <div class="language- extra-class"><pre class="language-text"><code>class Animal {
+    constructor() {
+        // this 指向实例
+        this.live = () =&gt; {
+            this.eat();
+            this.sleep();
+        };
+    }
+
+    eat() {
+        throw new Error(&quot;模板类方法必须被重写&quot;);
+    }
+
+    sleep() {
+        throw new Error(&quot;模板类方法必须被重写&quot;);
+    }
+}
+
+class Dog extends Animal {
+    constructor(...args) {
+        super(...args);
+    }
+    eat() {
+        console.log(&quot;狗吃粮&quot;);
+    }
+    sleep() {
+        console.log(&quot;狗睡觉&quot;);
+    }
+}
+
+class Cat extends Animal {
+    constructor(...args) {
+        super(...args);
+    }
+    eat() {
+        console.log(&quot;猫吃粮&quot;);
+    }
+    sleep() {
+        console.log(&quot;猫睡觉&quot;);
+    }
+}
+
+/********* 以下为测试代码 ********/
+
+// 此时, Animal中的this指向dog
+let dog = new Dog();
+dog.live();
+
+// 此时, Animal中的this指向cat
+let cat = new Cat();
+cat.live();
+</code></pre></div><h4 id="状态模式"><a href="#状态模式" class="header-anchor">#</a> 状态模式</h4> <p>状态模式：对象行为是根据状态改变，而改变的。</p> <h5 id="什么是-状态模式"><a href="#什么是-状态模式" class="header-anchor">#</a> 什么是“状态模式”？</h5> <p>状态模式：对象行为是根据状态改变，而改变的。</p> <p>正是由于内部状态的变化，导致对外的行为发生了变化。例如：相同的方法在不同时刻被调用，行为可能会有差。</p> <h5 id="优缺点-优点"><a href="#优缺点-优点" class="header-anchor">#</a> 优缺点 优点：</h5> <p>封装了转化规则，对于大量分支语句，可以考虑使用状态类进一步封装。</p> <p>每个状态都是确定的，对象行为是可控的。</p> <p>缺点：
+状态模式的实现关键是将事物的状态都封装成单独的类，这个类的各种方法就是“此种状态对应的表现行为”。因此，程序开销会增大。</p> <h5 id="es6-实现-5"><a href="#es6-实现-5" class="header-anchor">#</a> ES6 实现</h5> <p>在 JavaScript 中，可以直接用 JSON 对象来代替状态类。</p> <p>下面代码展示的就是 FSM（有限状态机）里面有 3</p> <p>种状态：download、pause、deleted。控制状态转化的代码也在其中。</p> <p>DownLoad类就是，常说的Context对象，它的行为会随着状态的改变而改变。</p> <div class="language- extra-class"><pre class="language-text"><code>const FSM = (() =&gt; {
+    let currenState = &quot;download&quot;;
+    return {
+        download: {
+            click: () =&gt; {
+                console.log(&quot;暂停下载&quot;);
+                currenState = &quot;pause&quot;;
+            },
+            del: () =&gt; {
+                console.log(&quot;先暂停, 再删除&quot;);
+            }
+        },
+        pause: {
+            click: () =&gt; {
+                console.log(&quot;继续下载&quot;);
+                currenState = &quot;download&quot;;
+            },
+            del: () =&gt; {
+                console.log(&quot;删除任务&quot;);
+                currenState = &quot;deleted&quot;;
+            }
+        },
+        deleted: {
+            click: () =&gt; {
+                console.log(&quot;任务已删除, 请重新开始&quot;);
+            },
+            del: () =&gt; {
+                console.log(&quot;任务已删除&quot;);
+            }
+        },
+        getState: () =&gt; currenState
+    };
+})();
+
+class Download {
+    constructor(fsm) {
+        this.fsm = fsm;
+    }
+
+    handleClick() {
+        const { fsm } = this;
+        fsm[fsm.getState()].click();
+    }
+
+    hanldeDel() {
+        const { fsm } = this;
+        fsm[fsm.getState()].del();
+    }
+}
+
+// 开始下载
+let download = new Download(FSM);
+
+download.handleClick(); // 暂停下载
+download.handleClick(); // 继续下载
+download.hanldeDel(); // 下载中，无法执行删除操作
+download.handleClick(); // 暂停下载
+download.hanldeDel(); // 删除任务
+</code></pre></div><h4 id="策略模式"><a href="#策略模式" class="header-anchor">#</a> 策略模式</h4> <p>策略模式定义：就是能够把一系列“可互换的”算法封装起来，并根据用户需求来选择其中一种。</p> <h5 id="什么是策略模式"><a href="#什么是策略模式" class="header-anchor">#</a> 什么是策略模式？</h5> <p>策略模式定义：就是能够把一系列“可互换的”算法封装起来，并根据用户需求来选择其中一种。</p> <p>策略模式的实现核心就是：将算法的使用和算法的实现分离。算法的实现交给策略类。算法的使用交给环境类，环境类会根据不同的情况选择合适的算法。</p> <h5 id="策略模式优缺点"><a href="#策略模式优缺点" class="header-anchor">#</a> 策略模式优缺点</h5> <p>在使用策略模式的时候，需要了解所有的“策略”（strategy）之间的异同点，才能选择合适的“策略”进行调用。</p> <p>代码实现</p> <div class="language- extra-class"><pre class="language-text"><code>// 策略类
+const strategies = {
+    A() {
+        console.log(&quot;This is stragegy A&quot;);
+    },
+    B() {
+        console.log(&quot;This is stragegy B&quot;);
+    }
+};
+
+// 环境类
+const context = name =&gt; {
+    return strategies[name]();
+};
+
+// 调用策略A
+context(&quot;A&quot;);
+// 调用策略B
+context(&quot;B&quot;);
+</code></pre></div><h4 id="解释器模式"><a href="#解释器模式" class="header-anchor">#</a> 解释器模式</h4> <p>解释器模式: 提供了评估语言的语法或表达式的方式。</p> <h5 id="什么是-解释器模式"><a href="#什么是-解释器模式" class="header-anchor">#</a> 什么是“解释器模式？</h5> <p>解释器模式定义: 提供了评估语言的语法或表达式的方式。</p> <p>这是基本不怎么使用的一种设计模式。确实想不到什么场景一定要用此种设计模式。</p> <p>实现这种模式的核心是：</p> <ol><li>抽象表达式：主要有一个interpret()操作</li> <li>终结符表达式：R = R1 + R2中，R1 R2就是终结符</li> <li>非终结符表达式：R = R1 - R2中，-就是终结符</li> <li>环境(Context): 存放文法中各个终结符所对应的具体值。比如前面R1和R2的值。</li></ol> <h5 id="优缺点"><a href="#优缺点" class="header-anchor">#</a> 优缺点</h5> <p>优点显而易见，每个文法规则可以表述为一个类或者方法。这些文法互相不干扰，符合“开闭原则”。</p> <p>由于每条文法都需要构建一个类或者方法，文法数量上去后，很难维护。并且，语句的执行效率低（一直在不停地互相调用）。</p> <div class="language- extra-class"><pre class="language-text"><code>class Context {
+    constructor() {
+        this._list = []; // 存放 终结符表达式
+        this._sum = 0; // 存放 非终结符表达式(运算结果)
+    }
+
+    get sum() {
+        return this._sum;
+    }
+
+    set sum(newValue) {
+        this._sum = newValue;
+    }
+
+    add(expression) {
+        this._list.push(expression);
+    }
+
+    get list() {
+        return [...this._list];
+    }
+}
+
+class PlusExpression {
+    interpret(context) {
+        if (!(context instanceof Context)) {
+            throw new Error(&quot;TypeError&quot;);
+        }
+        context.sum = ++context.sum;
+    }
+}
+
+class MinusExpression {
+    interpret(context) {
+        if (!(context instanceof Context)) {
+            throw new Error(&quot;TypeError&quot;);
+        }
+        context.sum = --context.sum;
+    }
+}
+
+/** 以下是测试代码 **/
+
+const context = new Context();
+
+// 依次添加: 加法 | 加法 | 减法 表达式
+context.add(new PlusExpression());
+context.add(new PlusExpression());
+context.add(new MinusExpression());
+
+// 依次执行: 加法 | 加法 | 减法 表达式
+context.list.forEach(expression =&gt; expression.interpret(context));
+console.log(context.sum);
+</code></pre></div><h4 id="订阅-发布模式"><a href="#订阅-发布模式" class="header-anchor">#</a> 订阅-发布模式</h4> <p>订阅-发布模式：定义了对象之间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖它的对象都可以得到通知。</p> <h5 id="什么是-订阅-发布模式"><a href="#什么是-订阅-发布模式" class="header-anchor">#</a> 什么是“订阅-发布模式”？</h5> <p>订阅-发布模式：定义了对象之间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖它的对象都可以得到通知。</p> <p>了解过事件机制或者函数式编程的朋友，应该会体会到“订阅-发布模式”所带来的“时间解耦”和“空间解耦”的优点。借助函数式编程中闭包和回调的概念，可以很优雅地实现这种设计模式。</p> <h5 id="订阅-发布模式-vs-观察者模式"><a href="#订阅-发布模式-vs-观察者模式" class="header-anchor">#</a> “订阅-发布模式” vs 观察者模式</h5> <p>订阅-发布模式和观察者模式概念相似，但在订阅-发布模式中，订阅者和发布者之间多了一层中间件：一个被抽象出来的信息调度中心。</p> <p>但其实没有必要太深究 2 者区别，因为《Head First 设计模式》这本经典书都写了：发布+订阅=观察者模式。其核心思想是状态改变和发布通知。在此基础上，根据语言特性，进行实现即可。</p> <div class="language- extra-class"><pre class="language-text"><code>const Event = {
+    clientList: {},
+
+    // 绑定事件监听
+    listen(key, fn) {
+        if (!this.clientList[key]) {
+            this.clientList[key] = [];
+        }
+        this.clientList[key].push(fn);
+        return true;
+    },
+
+    // 触发对应事件
+    trigger() {
+        const key = Array.prototype.shift.apply(arguments),
+            fns = this.clientList[key];
+
+        if (!fns || fns.length === 0) {
+            return false;
+        }
+
+        for (let fn of fns) {
+            fn.apply(null, arguments);
+        }
+
+        return true;
+    },
+
+    // 移除相关事件
+    remove(key, fn) {
+        let fns = this.clientList[key];
+
+        // 如果之前没有绑定事件
+        // 或者没有指明要移除的事件
+        // 直接返回
+        if (!fns || !fn) {
+            return false;
+        }
+
+        // 反向遍历移除置指定事件函数
+        for (let l = fns.length - 1; l &gt;= 0; l--) {
+            let _fn = fns[l];
+            if (_fn === fn) {
+                fns.splice(l, 1);
+            }
+        }
+
+        return true;
+    }
+};
+
+// 为对象动态安装 发布-订阅 功能
+const installEvent = obj =&gt; {
+    for (let key in Event) {
+        obj[key] = Event[key];
+    }
+};
+
+let salesOffices = {};
+installEvent(salesOffices);
+
+// 绑定自定义事件和回调函数
+
+salesOffices.listen(
+    &quot;event01&quot;,
+    (fn1 = price =&gt; {
+        console.log(&quot;Price is&quot;, price, &quot;at event01&quot;);
+    })
+);
+
+salesOffices.listen(
+    &quot;event02&quot;,
+    (fn2 = price =&gt; {
+        console.log(&quot;Price is&quot;, price, &quot;at event02&quot;);
+    })
+);
+
+salesOffices.trigger(&quot;event01&quot;, 1000);
+salesOffices.trigger(&quot;event02&quot;, 2000);
+
+salesOffices.remove(&quot;event01&quot;, fn1);
+
+// 输出: false
+// 说明删除成功
+console.log(salesOffices.trigger(&quot;event01&quot;, 1000));
+</code></pre></div><h4 id="责任链模式"><a href="#责任链模式" class="header-anchor">#</a> 责任链模式</h4> <p>责任链模式定义：多个对象均有机会处理请求，从而解除发送者和接受者之间的耦合关系。这些对象连接成为“链式结构”，每个节点转发请求，直到有对象处理请求为止。</p> <p>其核心思想就是：请求者不必知道是谁哪个节点对象处理的请求。如果当前不符合终止条件，那么把请求转发给下一个节点处理。</p> <h5 id="什么是-责任链模式"><a href="#什么是-责任链模式" class="header-anchor">#</a> 什么是“责任链模式”？</h5> <p>责任链模式定义：多个对象均有机会处理请求，从而解除发送者和接受者之间的耦合关系。这些对象连接成为“链式结构”，每个节点转发请求，直到有对象处理请求为止。</p> <p>其核心思想就是：请求者不必知道是谁哪个节点对象处理的请求。如果当前不符合终止条件，那么把请求转发给下一个节点处理。</p> <p>而当需求具有“传递”的性质时（代码中其中一种体现就是：多个if、else if、else if、else嵌套），就可以考虑将每个分支拆分成一个节点对象，拼接成为责任链。</p> <h5 id="优点与代价"><a href="#优点与代价" class="header-anchor">#</a> 优点与代价</h5> <p>优点：</p> <ol><li>可以根据需求变动，任意向责任链中添加 / 删除节点对象</li> <li>没有固定的“开始节点”，可以从任意节点开始</li></ol> <p>代价：责任链最大的代价就是每个节点带来的多余消耗。当责任链过长，很多节点只有传递的作用，而不是真正地处理逻辑。</p> <div class="language- extra-class"><pre class="language-text"><code>class Handler {
+    constructor() {
+        this.next = null;
+    }
+
+    setNext(handler) {
+        this.next = handler;
+    }
+}
+
+class LogHandler extends Handler {
+    constructor(...props) {
+        super(...props);
+        this.name = &quot;log&quot;;
+    }
+
+    handle(level, msg) {
+        if (level === this.name) {
+            console.log(`LOG: ${msg}`);
+            return;
+        }
+        this.next &amp;&amp; this.next.handle(...arguments);
+    }
+}
+
+class WarnHandler extends Handler {
+    constructor(...props) {
+        super(...props);
+        this.name = &quot;warn&quot;;
+    }
+
+    handle(level, msg) {
+        if (level === this.name) {
+            console.log(`WARN: ${msg}`);
+            return;
+        }
+        this.next &amp;&amp; this.next.handle(...arguments);
+    }
+}
+
+class ErrorHandler extends Handler {
+    constructor(...props) {
+        super(...props);
+        this.name = &quot;error&quot;;
+    }
+
+    handle(level, msg) {
+        if (level === this.name) {
+            console.log(`ERROR: ${msg}`);
+            return;
+        }
+        this.next &amp;&amp; this.next.handle(...arguments);
+    }
+}
+
+/******************以下是测试代码******************/
+
+let logHandler = new LogHandler();
+let warnHandler = new WarnHandler();
+let errorHandler = new ErrorHandler();
+
+// 设置下一个处理的节点
+logHandler.setNext(warnHandler);
+warnHandler.setNext(errorHandler);
+
+logHandler.handle(&quot;error&quot;, &quot;Some error occur&quot;);
+</code></pre></div><h4 id="迭代器模式"><a href="#迭代器模式" class="header-anchor">#</a> 迭代器模式</h4> <p>迭代器模式是指提供一种方法顺序访问一个集合对象的各个元素，使用者不需要了解集合对象的底层实现。</p> <h5 id="什么是迭代器模式"><a href="#什么是迭代器模式" class="header-anchor">#</a> 什么是迭代器模式？</h5> <p>迭代器模式是指提供一种方法顺序访问一个集合对象的各个元素，使用者不需要了解集合对象的底层实现。</p> <h5 id="内部迭代器和外部迭代器"><a href="#内部迭代器和外部迭代器" class="header-anchor">#</a> 内部迭代器和外部迭代器</h5> <p>内部迭代器：封装的方法完全接手迭代过程，外部只需要一次调用。</p> <p>外部迭代器：用户必须显式地请求迭代下一元素。熟悉 C++的朋友，可以类比 C++内置对象的迭代器的 end()、next()等方法。</p> <p>ES6 实现</p> <p>这里实现的是一个外部迭代器。需要实现边界判断函数、元素获取函数和更新索引函数。</p> <div class="language- extra-class"><pre class="language-text"><code>const Iterator = obj =&gt; {
+    let current = 0;
+    let next = () =&gt; (current += 1);
+    let end = () =&gt; current &gt;= obj.length;
+    let get = () =&gt; obj[current];
+
+    return {
+        next,
+        end,
+        get
+    };
+};
+
+let myIter = Iterator([1, 2, 3]);
+while (!myIter.end()) {
+    console.log(myIter.get());
+    myIter.next();
+}
+
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/webframe/javascript/" class="prev router-link-active">目录</a></span> <span class="next"><a href="/webframe/javascript/JavaScript_resource.html">[学习资源]javaScript</a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/assets/js/app.2be46521.js" defer></script><script src="/assets/js/2.8c5bb89e.js" defer></script><script src="/assets/js/25.08bb4561.js" defer></script><script src="/assets/js/3.285c3e97.js" defer></script>
+  </body>
+</html>
